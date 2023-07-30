@@ -1,9 +1,5 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import pandas as pd
-
-# Load the CSV dataset into a pandas DataFrame
-df = pd.read_csv("studentInfo.csv")
-print(df.loc[[0, 1, 2]])
 
 # Perform any data processing or cleaning if required
 # For example:
@@ -14,7 +10,17 @@ app = Flask(__name__)
 
 @app.route("/api/data", methods=["GET"])
 def get_all_data():
-    # Convert DataFrame to JSON and return
+    csv_file_path = request.headers.get('file-path')
+    
+    if csv_file_path is None:
+        return jsonify({"message": "File path must be provided as an argument"}), 400
+
+    # Load the CSV dataset into a pandas DataFrame
+    try:
+        df = pd.read_csv(csv_file_path)
+    except FileNotFoundError:
+        return jsonify({"message": "File not found"}), 404
+
     return jsonify(df.to_dict(orient="records"))
 
 @app.route("/api/data/<int:id>", methods=["GET"])

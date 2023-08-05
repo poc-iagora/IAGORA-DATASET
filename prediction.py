@@ -2,6 +2,7 @@ import joblib
 import numpy as np
 import pandas as pd
 import pickle
+import openai
 
 # Load the model from the file
 model = joblib.load('model_2.pkl')
@@ -46,3 +47,22 @@ data = le.inverse_transform(prediction)
 
 # Print the prediction
 print("Prediction:", data)
+
+# Set up your OpenAI API key
+openai.api_key = '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'
+
+# Modify this prompt to be relevant to the predicted profile
+prompt_text = f"Can you tell me about a student with the following profile: {data}?"
+
+# Call the GPT API
+response = openai.Completion.create(
+    engine='text-davinci-003',
+    prompt=prompt_text,
+    max_tokens=1000
+)
+
+# Process the response
+answer = response.choices[0].text.strip()
+
+# Print the response
+print(answer)

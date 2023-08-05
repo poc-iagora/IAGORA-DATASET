@@ -49,7 +49,8 @@ data = le.inverse_transform(prediction)
 print("Prediction:", data)
 
 # Set up your OpenAI API key
-openai.api_key = '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'
+# API chatGPT4
+openai.api_key = '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'
 
 # Modify this prompt to be relevant to the predicted profile
 prompt_text = f"Can you tell me about a student with the following profile: {data}?"

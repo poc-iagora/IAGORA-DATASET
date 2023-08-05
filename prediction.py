@@ -53,7 +53,7 @@ print("Prediction:", data)
 openai.api_key = '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'
 
 # Modify this prompt to be relevant to the predicted profile
-prompt_text = f"Can you show me what I must mastered to be: {data}?"
+prompt_text = f"Can you show me what I must do to mastered {data[0]} " + "as I am Backend developper"
 
 # Call the GPT API
 response = openai.Completion.create(

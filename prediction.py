@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import pickle
 import openai
+import configparser
 
 # Load the model from the file
 model = joblib.load('model_2.pkl')
@@ -50,7 +51,11 @@ print("Prediction:", data)
 
 # Set up your OpenAI API key
 # API chatGPT4
-openai.api_key = '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'
+# Load OpenAI key from config file
+config = configparser.ConfigParser()
+config.read('config.ini')
+
+openai.api_key = config['OpenAI']['key']
 
 # Modify this prompt to be relevant to the predicted profile
 prompt_text = f"Can you show me what I must do to mastered {data[0]} " + "as I am Backend developper"

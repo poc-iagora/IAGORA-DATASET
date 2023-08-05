@@ -23,13 +23,13 @@ sample_data = [
     39,      # HOURS_FRONTEND
     29,      # NUM_COURSES_BEGINNER_DATASCIENCE
     2,       # NUM_COURSES_BEGINNER_BACKEND
-    4,       # NUM_COURSES_BEGINNER_FRONTEND
+    10,       # NUM_COURSES_BEGINNER_FRONTEND
     0,       # NUM_COURSES_ADVANCED_DATASCIENCE
     2,       # NUM_COURSES_ADVANCED_BACKEND
     5,       # NUM_COURSES_ADVANCED_FRONTEND
     84,      # AVG_SCORE_DATASCIENCE
     74,      # AVG_SCORE_BACKEND
-    0        # AVG_SCORE_FRONTEND
+    80        # AVG_SCORE_FRONTEND
 ]
 
 # Make sure the input data is in the correct shape (1, number_of_features)
@@ -50,7 +50,7 @@ print("Prediction:", data)
 
 # Set up your OpenAI API key
 # API chatGPT4
-openai.api_key = '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'
+openai.api_key = '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'
 
 # Modify this prompt to be relevant to the predicted profile
 prompt_text = f"Can you show me what I must do to mastered {data[0]} " + "as I am Backend developper"

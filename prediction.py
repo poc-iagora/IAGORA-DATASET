@@ -50,10 +50,10 @@ print("Prediction:", data)
 
 # Set up your OpenAI API key
 # API chatGPT4
-openai.api_key = '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'
+openai.api_key = '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'
 
 # Modify this prompt to be relevant to the predicted profile
-prompt_text = f"Can you tell me about a student with the following profile: {data}?"
+prompt_text = f"Can you show me what I must mastered to be: {data}?"
 
 # Call the GPT API
 response = openai.Completion.create(
@@ -61,6 +61,8 @@ response = openai.Completion.create(
     prompt=prompt_text,
     max_tokens=1000
 )
+
+print(prompt_text)
 
 # Process the response
 answer = response.choices[0].text.strip()

@@ -53,7 +53,7 @@ def gpt():
     response = openai.Completion.create(engine='text-davinci-003', prompt=prompt_text, max_tokens=1000)
     answer = response.choices[0].text.strip()
     return jsonify(answer=answer)
-
+ 
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,0 +1,23 @@
+curl --location --request POST 'http://localhost:5000/gpt' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "prediction": "Data Engineer"
+}'
+
+
+curl --location --request POST 'http://localhost:5000/predict' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "HOURS_DATASCIENCE": 28,
+    "HOURS_BACKEND": 7,
+    "HOURS_FRONTEND": 39,
+    "NUM_COURSES_BEGINNER_DATASCIENCE": 29,
+    "NUM_COURSES_BEGINNER_BACKEND": 2,
+    "NUM_COURSES_BEGINNER_FRONTEND": 10,
+    "NUM_COURSES_ADVANCED_DATASCIENCE": 0,
+    "NUM_COURSES_ADVANCED_BACKEND": 2,
+    "NUM_COURSES_ADVANCED_FRONTEND": 5,
+    "AVG_SCORE_DATASCIENCE": 84,
+    "AVG_SCORE_BACKEND": 74,
+    "AVG_SCORE_FRONTEND": 80
+}'

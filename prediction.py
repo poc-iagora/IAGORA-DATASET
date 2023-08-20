@@ -5,6 +5,8 @@ import pickle
 import openai
 import configparser
 
+from langchain import ChatOpenAI
+
 # Load the model from the file
 model = joblib.load('model_2.pkl')
 le = joblib.load('label_encoder.pkl')

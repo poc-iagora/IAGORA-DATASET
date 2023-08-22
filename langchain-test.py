@@ -96,17 +96,5 @@ text = llm.predict(promptFront
                    + ","
                    + prediction[0][4])
 
-print(promptFront 
-                   + "sachant que voici mon profil de cursus scolaire " 
-                   + prediction[0][0] 
-                   + ","
-                   + prediction[0][1]
-                   + ","
-                   + prediction[0][2]
-                   + ","
-                   + prediction[0][3]
-                   + ","
-                   + prediction[0][4])
-
 # Print the text
 print(text)

@@ -3,6 +3,49 @@ import numpy as np
 import pandas as pd
 
 from langchain.llms import OpenAI
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+import scrapUrl as su
+import scrapPdf as sp
+import embedding as em
+
+import openai
+
+# scrapping text from website
+scrapU = su.scrapUrl("https://en.wikipedia.org/wiki/GPT-4")
+
+# scapping text from PDF
+scrapP = sp.load_pdf_content("C:/Users/JerryHeritiana(RAPP)/OneDrive - OneWorkplace/Documents/IAGORA/FUNCHATGPTSerge.pdf")
+#print(scrapP)
+
+# split document into text fragment
+text_splitter = RecursiveCharacterTextSplitter(
+    chunk_size = 100,
+    chunk_overlap  = 20,
+    length_function = len,
+)
+textSplit = text_splitter.create_documents([scrapU])
+
+textChunk = []
+
+for text in textSplit:
+    textChunk.append(text.page_content)
+
+df = pd.DataFrame({'textChunks': textChunk})
+
+# convert the Series object to a DataFrame object
+df_ada_embedding = df.textChunks.to_frame(name='textChunks').applymap(em.get_embedding, model='text-embedding-ada-002')
+
+# get the embeddings for all of the text chunks
+df['ada_embedding'] = df_ada_embedding['textChunks'].values
+
+# find the text chunk with the highest cosine similarity
+most_similar_chunk = df.idxmax(axis=0, by='cos_sim')
+
+# print the top few rows of the DataFrame
+df.head()
+
+# print(df)
 
 feature_names = [
     'HOURS_DATASCIENCE',
@@ -79,7 +122,7 @@ prediction = model.predict(input_data_df)
 #data = le.inverse_transform(prediction)
 
 # Create a LangChain client
-llm = OpenAI(openai_api_key="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")
+llm = OpenAI(openai_api_key="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")
 
 promptFront = "Comment generer une base de donnee sur MYSQL "
 
@@ -97,4 +140,4 @@ text = llm.predict(promptFront
                    + prediction[0][4])
 
 # Print the text
-print(text)
+#print(text)

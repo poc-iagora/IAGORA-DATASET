@@ -11,11 +11,14 @@ import embedding as em
 
 import openai
 
+import os
+import configparser
+
 # scrapping text from website
 scrapU = su.scrapUrl("https://en.wikipedia.org/wiki/GPT-4")
 
 # scapping text from PDF
-scrapP = sp.load_pdf_content("C:/Users/JerryHeritiana(RAPP)/OneDrive - OneWorkplace/Documents/IAGORA/FUNCHATGPTSerge.pdf")
+scrapP = sp.load_pdf_content("C:/Users/JerryHeritiana(RAPP)/OneDrive - OneWorkplace/Documents/IAGORA/MADANumeriqueJUIN.pdf")
 #print(scrapP)
 
 # split document into text fragment
@@ -24,26 +27,35 @@ text_splitter = RecursiveCharacterTextSplitter(
     chunk_overlap  = 20,
     length_function = len,
 )
-textSplit = text_splitter.create_documents([scrapU])
+textSplit = text_splitter.create_documents([scrapP])
 
-textChunk = []
+text_chunks = []
 
 for text in textSplit:
-    textChunk.append(text.page_content)
+    text_chunks.append(text.page_content)
 
-df = pd.DataFrame({'textChunks': textChunk})
+df = pd.DataFrame({'text_chunks': text_chunks})
+
+#print(df)
+
+# get embeddings from text-embedding-ada model
+#def get_embedding(text, model="text-embedding-ada-002"):
+   #text = text.replace("\n", " ")
+   #return openai.Embedding.create(input = [text], model=model)['data'][0]['embedding']
+
+#df['ada_embedding'] = df.text_chunks.apply(lambda x: get_embedding(x, model='text-embedding-ada-002'))
 
 # convert the Series object to a DataFrame object
-df_ada_embedding = df.textChunks.to_frame(name='textChunks').applymap(em.get_embedding, model='text-embedding-ada-002')
-
+#df_ada_embedding = df.textChunks.to_frame(name='textChunks').applymap(em.get_embedding, model='text-embedding-ada-002')
+#print(df_ada_embedding)
 # get the embeddings for all of the text chunks
-df['ada_embedding'] = df_ada_embedding['textChunks'].values
+#df['ada_embedding'] = df_ada_embedding['textChunks'].values
 
 # find the text chunk with the highest cosine similarity
-most_similar_chunk = df.idxmax(axis=0, by='cos_sim')
+#most_similar_chunk = df.idxmax(axis=0, by='cos_sim')
 
 # print the top few rows of the DataFrame
-df.head()
+#df.head()
 
 # print(df)
 
@@ -122,7 +134,13 @@ prediction = model.predict(input_data_df)
 #data = le.inverse_transform(prediction)
 
 # Create a LangChain client
-llm = OpenAI(openai_api_key="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")
+#llm = OpenAI(openai_api_key="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")
+config = configparser.ConfigParser()
+config.read('config.ini')
+
+openai.api_key = config['OpenAI']['key']
+llm = OpenAI(openai_api_key=openai.api_key)
+
 
 promptFront = "Comment generer une base de donnee sur MYSQL "
 
@@ -139,5 +157,5 @@ text = llm.predict(promptFront
                    + ","
                    + prediction[0][4])
 
-# Print the text
-#print(text)
+#Print the text
+print(text)

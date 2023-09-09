@@ -20,7 +20,7 @@ import configparser
 scrapU = su.scrapUrl("https://en.wikipedia.org/wiki/GPT-4")
 
 # scapping text from PDF
-scrapP = sp.load_pdf_content("C:/Users/JerryHeritiana(RAPP)/OneDrive - OneWorkplace/Documents/IAGORA/FUNCHATGPTSerge.pdf")
+# scrapP = sp.load_pdf_content("C:/Users/JerryHeritiana(RAPP)/OneDrive - OneWorkplace/Documents/IAGORA/FUNCHATGPTSerge.pdf")
 #print(scrapP)
 
 # split document into text fragment
@@ -29,7 +29,7 @@ text_splitter = RecursiveCharacterTextSplitter(
     chunk_overlap  = 20,
     length_function = len,
 )
-textSplit = text_splitter.create_documents([scrapP])
+textSplit = text_splitter.create_documents([scrapU])
 
 text_chunks = []
 
@@ -95,8 +95,8 @@ prompt = PromptTemplate(template=template, input_variables=["context", "users_qu
 
 # fill the prompt template
 prompt_text = prompt.format(context = context, users_question = users_question)
-result = llm(prompt_text)
-print(result)
+# result = llm(prompt_text)
+# print(result)
 
 # convert the Series object to a DataFrame object
 #df_ada_embedding = df.textChunks.to_frame(name='textChunks').applymap(em.get_embedding, model='text-embedding-ada-002')
@@ -188,8 +188,6 @@ prediction = model.predict(input_data_df)
 
 # Create a LangChain client
 #llm = OpenAI(openai_api_key="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")
-config = configparser.ConfigParser()
-config.read('config.ini')
 
 #openai.api_key = config['OpenAI']['key']
 #llm = OpenAI()
@@ -198,17 +196,17 @@ config.read('config.ini')
 promptFront = "Comment generer une base de donnee sur MYSQL "
 
 # Generate text
-#text = llm.predict(promptFront 
-                   #+ "et adapte les reponses selon mon niveau sur ces 5 matieres " 
-                #    + prediction[0][0] 
-                #    + ","
-                #    + prediction[0][1]
-                #    + ","
-                #    + prediction[0][2]
-                #    + ","
-                #    + prediction[0][3]
-                #    + ","
-                #    + prediction[0][4])
+text = llm.predict(promptFront 
+                   + "et adapte les reponses selon mon niveau sur ces 5 matieres " 
+                   + prediction[0][0] 
+                   + ","
+                   + prediction[0][1]
+                   + ","
+                   + prediction[0][2]
+                   + ","
+                   + prediction[0][3]
+                   + ","
+                   + prediction[0][4])
 
 #Print the text
-#print(text)
+print(text)

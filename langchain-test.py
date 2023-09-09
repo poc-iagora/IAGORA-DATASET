@@ -20,7 +20,7 @@ import configparser
 scrapU = su.scrapUrl("https://en.wikipedia.org/wiki/GPT-4")
 
 # scapping text from PDF
-scrapP = sp.load_pdf_content("C:/Users/JerryHeritiana(RAPP)/OneDrive - OneWorkplace/Documents/IAGORA/MADANumeriqueJUIN.pdf")
+scrapP = sp.load_pdf_content("C:/Users/JerryHeritiana(RAPP)/OneDrive - OneWorkplace/Documents/IAGORA/FUNCHATGPTSerge.pdf")
 #print(scrapP)
 
 # split document into text fragment
@@ -49,7 +49,7 @@ df['ada_embedding'] = df.text_chunks.apply(lambda x: get_embedding(x, model='tex
 
 # print(df)
 
-users_question = "Where is IT University?"
+users_question = "Who is Miranda"
 question_embedding = get_embedding(text=users_question, model="text-embedding-ada-002")
 
 # create a list to store the calculated cosine similarity

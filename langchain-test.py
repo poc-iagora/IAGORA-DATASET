@@ -2,8 +2,10 @@ import joblib
 import numpy as np
 import pandas as pd
 
+from langchain import PromptTemplate
 from langchain.llms import OpenAI
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+from numpy.linalg import norm
 
 import scrapUrl as su
 import scrapPdf as sp
@@ -34,16 +36,67 @@ text_chunks = []
 for text in textSplit:
     text_chunks.append(text.page_content)
 
-df = pd.DataFrame({'text_chunks': text_chunks})
-
-#print(df)
+df = pd.DataFrame({'text_chunks': text_chunks}).loc[0 : 10]
+# df = pd.DataFrame({'text_chunks': text_chunks})
 
 # get embeddings from text-embedding-ada model
-#def get_embedding(text, model="text-embedding-ada-002"):
-   #text = text.replace("\n", " ")
-   #return openai.Embedding.create(input = [text], model=model)['data'][0]['embedding']
+def get_embedding(text, model="text-embedding-ada-002"):
+   text = text.replace("\n", " ")
+#    print("P")
+   return openai.Embedding.create(input = [text], model=model)['data'][0]['embedding']
 
-#df['ada_embedding'] = df.text_chunks.apply(lambda x: get_embedding(x, model='text-embedding-ada-002'))
+df['ada_embedding'] = df.text_chunks.apply(lambda x: get_embedding(x, model='text-embedding-ada-002'))
+
+# print(df)
+
+users_question = "Where is IT University?"
+question_embedding = get_embedding(text=users_question, model="text-embedding-ada-002")
+
+# create a list to store the calculated cosine similarity
+cos_sim = []
+
+for index, row in df.iterrows():
+   A = row.ada_embedding
+   B = question_embedding
+
+   # calculate the cosine similiarity
+   cosine = np.dot(A,B)/(norm(A)*norm(B))
+
+   cos_sim.append(cosine)
+
+df["cos_sim"] = cos_sim
+df.sort_values(by=["cos_sim"], ascending=False)
+
+# define the LLM you want to use
+llm = OpenAI(temperature=1)
+
+# define the context for the prompt by joining the most relevant text chunks
+context = ""
+
+for index, row in df[0:50].iterrows():
+    context = context + " " + row.text_chunks
+
+# define the prompt template
+template = """
+Tu es un chat bot qui aime aider les gens ! Compte tenu des sections contextuelles suivantes, répondez à la
+question en utilisant uniquement le contexte donné. Si tu n'es pas sûr et que la réponse n'est pas
+explicitement écrite dans la documentation, dites "Désolé, je ne sais pas comment vous aider."
+
+Context sections:
+{context}
+
+Question:
+{users_question}
+
+Answer:
+"""
+
+prompt = PromptTemplate(template=template, input_variables=["context", "users_question"])
+
+# fill the prompt template
+prompt_text = prompt.format(context = context, users_question = users_question)
+result = llm(prompt_text)
+print(result)
 
 # convert the Series object to a DataFrame object
 #df_ada_embedding = df.textChunks.to_frame(name='textChunks').applymap(em.get_embedding, model='text-embedding-ada-002')
@@ -138,24 +191,24 @@ prediction = model.predict(input_data_df)
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-openai.api_key = config['OpenAI']['key']
-llm = OpenAI(openai_api_key=openai.api_key)
+#openai.api_key = config['OpenAI']['key']
+#llm = OpenAI()
 
 
 promptFront = "Comment generer une base de donnee sur MYSQL "
 
 # Generate text
-text = llm.predict(promptFront 
-                   + "et adapte les reponses selon mon niveau sur ces 5 matieres " 
-                   + prediction[0][0] 
-                   + ","
-                   + prediction[0][1]
-                   + ","
-                   + prediction[0][2]
-                   + ","
-                   + prediction[0][3]
-                   + ","
-                   + prediction[0][4])
+#text = llm.predict(promptFront 
+                   #+ "et adapte les reponses selon mon niveau sur ces 5 matieres " 
+                #    + prediction[0][0] 
+                #    + ","
+                #    + prediction[0][1]
+                #    + ","
+                #    + prediction[0][2]
+                #    + ","
+                #    + prediction[0][3]
+                #    + ","
+                #    + prediction[0][4])
 
 #Print the text
-print(text)
+#print(text)

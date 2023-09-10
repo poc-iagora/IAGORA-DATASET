@@ -98,21 +98,40 @@ prediction = model.predict(input_data_df)
 #openai.api_key = config['OpenAI']['key']
 #llm = OpenAI()
 
+Question = "aide moi a creer une page login sur react js "
 
-promptFront = "Comment generer une base de donnee sur MYSQL "
+template = """
+Je suis étudiant en Master 2 BIHAR : Big Data Intelligence for Human Augmented Reality.
+mon objectif est de devenir un expert dans l'utilisation de l'Intelligence Artificielle,
+dans la gestion du Big Data et dans le développement d'applications Mobiles et Web dans le domaine 
+de l'intelligence artificielle et du big data.
+
+Mon domaine préféré est le Frontend.
+
+Mon style de cours est plutot la pratique.
+
+Voici mon profil:
+
+DATASCIENCE: """ + prediction[0][0] + """
+BACKEND: """ + prediction[0][1] + """
+FRONTEND: """ + prediction[0][2] + """
+IA: """ + prediction[0][3] + """
+BDD: """ + prediction[0][4] + """
+
+Alors voici ma question: """+Question+""""
+
+Réponds à mes questions en fonction de mon niveau d'étude, de ma matière préférée et de mon style d'enseignement.
+et mon profil
+
+Propose moi des exemples et des scripts
+
+"""
+
+print(template)
+
 
 # Generate text
-text = llm.predict(promptFront 
-                   + "et adapte les reponses selon mon niveau sur ces 5 matieres " 
-                   + prediction[0][0] 
-                   + ","
-                   + prediction[0][1]
-                   + ","
-                   + prediction[0][2]
-                   + ","
-                   + prediction[0][3]
-                   + ","
-                   + prediction[0][4])
+text = llm.predict(template)
 
 #Print the text
 print(text)

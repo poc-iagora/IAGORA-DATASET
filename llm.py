@@ -14,7 +14,7 @@ import scrapUrl as su
 import scrapPdf as sp
 
 # URL of the Wikipedia page to scrape
-url = 'https://towardsdatascience.com/all-you-need-to-know-to-build-your-first-llm-app-eb982c78ffac'
+# url = 'https://towardsdatascience.com/all-you-need-to-know-to-build-your-first-llm-app-eb982c78ffac'
 
 # Send a GET request to the URL
 # response = requests.get(url)
@@ -79,6 +79,8 @@ Question:
 
 Answer:
 """
+
+print(template)
 
 prompt = PromptTemplate(template=template, input_variables=["context", "users_question"])
 

@@ -81,7 +81,7 @@ data_sample = [
 # Vérification de la longueur
 assert len(data_sample) == len(feature_names)  # Ceci doit passer sans erreur
 
-model = joblib.load('multi_target_model_4.pkl')
+model = joblib.load('multi_target_model_5.pkl')
 #le = joblib.load('label_encoder4.pkl')
 
 input_data_df = pd.DataFrame([data_sample], columns=feature_names)
@@ -98,7 +98,7 @@ prediction = model.predict(input_data_df)
 #openai.api_key = config['OpenAI']['key']
 #llm = OpenAI()
 
-Question = "aide moi a creer une page login sur react js "
+Question = "Give me some tips on joining python with oracle 23c "
 
 template = """
 Je suis étudiant en Master 2 BIHAR : Big Data Intelligence for Human Augmented Reality.

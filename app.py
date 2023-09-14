@@ -17,10 +17,16 @@ import json
 from flask import Flask, request
 from flask import jsonify
 
+from flask import Flask
+from flask_cors import CORS
+
 import llm as llm
 import prediction as pred
+from flask import Response
+
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/llm", methods=["POST"])
 def index():
@@ -29,15 +35,18 @@ def index():
     print(requete['url'])
     #text = request.json["text"]
     result = llm.callLlm(requete['q1'],requete['url'])
-    return jsonify(result)
+    resp = Response(result)
+    resp.charset = "utf-8"
+    return resp
 
 
 @app.route("/prediction", methods=["POST"])
 def prediction():
     question = request.get_json()
     result = pred.callPrediction(question['q2'])
-    return jsonify(result)
-
+    resp = Response(result)
+    resp.charset = "utf-8"
+    return resp
 
 if __name__ == "__main__":
     app.run(debug=True)

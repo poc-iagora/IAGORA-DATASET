@@ -129,7 +129,7 @@ def callPrediction(user_question):
     Réponds à mes questions en fonction de mon niveau d'étude, de ma matière préférée et de mon style d'enseignement.
     et mon profil
 
-    Donne moi des exemples et des scripts ou du code que je peux utiliser.
+    Donne moi des exemples et des scripts ou du code que je peux utiliser si necessaire.
 
     """
 
@@ -139,6 +139,4 @@ def callPrediction(user_question):
     # Generate text
     text = llm.predict(template)
 
-    #Print the text
-    print(text)
     return text

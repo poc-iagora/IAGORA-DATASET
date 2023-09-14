@@ -92,5 +92,5 @@ def callLlm(user_question, url):
 
     # ask the defined LLM
     result = llm(prompt_text)
-    print(result)
-    return result
+    print(result.encode("utf-8"))
+    return result.encode("utf-8")

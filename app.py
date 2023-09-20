@@ -47,6 +47,3 @@ def prediction():
     resp = Response(result)
     resp.charset = "utf-8"
     return resp
-
-if __name__ == "__main__":
-    app.run(debug=True)

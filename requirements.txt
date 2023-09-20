@@ -97,6 +97,7 @@ python-dotenv==1.0.0
 pytz==2023.3
 PyYAML==6.0.1
 referencing==0.30.2
+regex==2023.8.8
 requests==2.28.2
 rich==13.4.2
 rpds-py==0.10.0
@@ -112,6 +113,7 @@ starlette==0.27.0
 sympy==1.12
 tenacity==8.2.2
 threadpoolctl==3.2.0
+tiktoken==0.5.1
 tokenizers==0.14.0
 tqdm==4.66.1
 typer==0.9.0

@@ -21,10 +21,22 @@ import json
 from flask import Flask, request
 from flask import jsonify
 
-def callPrediction(user_question):
+def callPrediction(user_question , 
+HOURS_DATASCIENCE, HOURS_BACKEND, HOURS_FRONTEND, HOURS_IA, HOURS_BDD,
+NUM_COURSES_BEGINNER_DATASCIENCE, NUM_COURSES_BEGINNER_BACKEND, NUM_COURSES_BEGINNER_FRONTEND, NUM_COURSES_BEGINNER_IA, NUM_COURSES_BEGINNER_BDD,
+NUM_COURSES_ADVANCED_DATASCIENCE, NUM_COURSES_ADVANCED_BACKEND, NUM_COURSES_ADVANCED_FRONTEND, NUM_COURSES_ADVANCED_IA, NUM_COURSES_ADVANCED_BDD,
+AVG_SCORE_DATASCIENCE, AVG_SCORE_BACKEND, AVG_SCORE_FRONTEND, AVG_SCORE_IA, AVG_SCORE_BDD,
+ORIENTATION,
+FAV_COURS, HAT_COURS):
 
     # define the LLM you want to use
     llm = OpenAI(temperature=1)
+
+    print(HOURS_DATASCIENCE)
+    print(HOURS_BACKEND)
+    print(HOURS_FRONTEND)
+    print(HOURS_IA)
+    print(HOURS_BDD)
 
     feature_names = [
         'HOURS_DATASCIENCE',
@@ -55,33 +67,62 @@ def callPrediction(user_question):
         'ORIENTATION']
 
 
+    # data_sample = [
+    #     10,   # HOURS_DATASCIENCE
+    #     5,    # HOURS_BACKEND
+    #     8,    # HOURS_FRONTEND
+    #     7,    # HOURS_IA
+    #     9,    # HOURS_BDD
+    #     2,    # NUM_COURSES_BEGINNER_DATASCIENCE
+    #     1,    # NUM_COURSES_BEGINNER_BACKEND
+    #     2,    # NUM_COURSES_BEGINNER_FRONTEND
+    #     1,    # NUM_COURSES_BEGINNER_IA
+    #     2,    # NUM_COURSES_BEGINNER_BDD
+    #     1,    # NUM_COURSES_ADVANCED_DATASCIENCE
+    #     0,    # NUM_COURSES_ADVANCED_BACKEND
+    #     1,    # NUM_COURSES_ADVANCED_FRONTEND
+    #     2,    # NUM_COURSES_ADVANCED_IA
+    #     0,    # NUM_COURSES_ADVANCED_BDD
+    #     80,   # AVG_SCORE_DATASCIENCE
+    #     75,   # AVG_SCORE_BACKEND
+    #     85,   # AVG_SCORE_FRONTEND
+    #     70,   # AVG_SCORE_IA
+    #     90,   # AVG_SCORE_BDD
+    #     15,   # NB_CLICKS_DATASCIENCE
+    #     5,    # NB_CLICKS_BACKEND
+    #     8,    # NB_CLICKS_FRONTEND
+    #     6,    # NB_CLICKS_IA
+    #     10,   # NB_CLICKS_BDD
+    #     1 # ORIENTATION
+    # ]
+
     data_sample = [
-        10,   # HOURS_DATASCIENCE
-        5,    # HOURS_BACKEND
-        8,    # HOURS_FRONTEND
-        7,    # HOURS_IA
-        9,    # HOURS_BDD
-        2,    # NUM_COURSES_BEGINNER_DATASCIENCE
-        1,    # NUM_COURSES_BEGINNER_BACKEND
-        2,    # NUM_COURSES_BEGINNER_FRONTEND
-        1,    # NUM_COURSES_BEGINNER_IA
-        2,    # NUM_COURSES_BEGINNER_BDD
-        1,    # NUM_COURSES_ADVANCED_DATASCIENCE
-        0,    # NUM_COURSES_ADVANCED_BACKEND
-        1,    # NUM_COURSES_ADVANCED_FRONTEND
-        2,    # NUM_COURSES_ADVANCED_IA
-        0,    # NUM_COURSES_ADVANCED_BDD
-        80,   # AVG_SCORE_DATASCIENCE
-        75,   # AVG_SCORE_BACKEND
-        85,   # AVG_SCORE_FRONTEND
-        70,   # AVG_SCORE_IA
-        90,   # AVG_SCORE_BDD
-        15,   # NB_CLICKS_DATASCIENCE
-        5,    # NB_CLICKS_BACKEND
-        8,    # NB_CLICKS_FRONTEND
-        6,    # NB_CLICKS_IA
-        10,   # NB_CLICKS_BDD
-        1 # ORIENTATION
+        HOURS_DATASCIENCE,   
+        HOURS_BACKEND,    
+        HOURS_FRONTEND,    
+        HOURS_IA,    
+        HOURS_BDD,    
+        NUM_COURSES_BEGINNER_DATASCIENCE,    
+        NUM_COURSES_BEGINNER_BACKEND,    
+        NUM_COURSES_BEGINNER_FRONTEND,    
+        NUM_COURSES_BEGINNER_IA,    
+        NUM_COURSES_BEGINNER_BDD,    
+        NUM_COURSES_ADVANCED_DATASCIENCE,    
+        NUM_COURSES_ADVANCED_BACKEND,    
+        NUM_COURSES_ADVANCED_FRONTEND,    
+        NUM_COURSES_ADVANCED_IA,    
+        NUM_COURSES_ADVANCED_BDD,    
+        AVG_SCORE_DATASCIENCE,   
+        AVG_SCORE_BACKEND,   
+        AVG_SCORE_FRONTEND,   
+        AVG_SCORE_IA,   
+        AVG_SCORE_BDD,   
+        10,   
+        10,    
+        10,    
+        10,    
+        10,   
+        ORIENTATION
     ]
 
     # Vérification de la longueur
@@ -112,9 +153,9 @@ def callPrediction(user_question):
     dans la gestion du Big Data et dans le développement d'applications Mobiles et Web dans le domaine 
     de l'intelligence artificielle et du big data.
 
-    Mon domaine préféré est le Frontend.
+    Mon domaine préféré est """+FAV_COURS+""".
 
-    Mon style de cours est plutot la pratique.
+    Mon style de cours est """+ORIENTATION+""".
 
     Voici mon profil:
 

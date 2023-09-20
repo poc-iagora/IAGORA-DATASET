@@ -43,7 +43,13 @@ def index():
 @app.route("/prediction", methods=["POST"])
 def prediction():
     question = request.get_json()
-    result = pred.callPrediction(question['q2'])
+    result = pred.callPrediction(question['q2'],
+        question['HOURS_DATASCIENCE'], question['HOURS_BACKEND'], question['HOURS_FRONTEND'], question['HOURS_IA'], question['HOURS_BDD'],
+        question['NUM_COURSES_BEGINNER_DATASCIENCE'], question['NUM_COURSES_BEGINNER_BACKEND'], question['NUM_COURSES_BEGINNER_FRONTEND'], question['NUM_COURSES_BEGINNER_IA'], question['NUM_COURSES_BEGINNER_BDD'],
+        question['NUM_COURSES_ADVANCED_DATASCIENCE'], question['NUM_COURSES_ADVANCED_BACKEND'], question['NUM_COURSES_ADVANCED_FRONTEND'], question['NUM_COURSES_ADVANCED_IA'], question['NUM_COURSES_ADVANCED_BDD'],
+        question['AVG_SCORE_DATASCIENCE'], question['AVG_SCORE_BACKEND'], question['AVG_SCORE_FRONTEND'], question['AVG_SCORE_IA'], question['AVG_SCORE_BDD'],
+        question['ORIENTATION'],
+        question['FAV_COURS'], question['HAT_COURS'])
     resp = Response(result)
     resp.charset = "utf-8"
     return resp

@@ -24,8 +24,6 @@ import llm as llm
 import prediction as pred
 from flask import Response
 
-print("tay")
-
 app = Flask(__name__)
 CORS(app)
 
@@ -55,4 +53,6 @@ def prediction():
     resp.charset = "utf-8"
     return resp
 
-app.run(host='0.0.0.0', port=5000)
+# app.run(host='0.0.0.0', port=5000)
+if __name__ == "__main__":
+    app.run(debug=True)
